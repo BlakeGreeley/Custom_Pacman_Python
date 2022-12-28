@@ -1,6 +1,7 @@
 from turtle import width
 import pygame
 from board import boards
+import math
 
 pygame.init()
 
@@ -12,6 +13,7 @@ fps = 60
 font = pygame.font.Font('freesansbold.ttf', 18)
 level = boards
 color = 'orange'
+PI = math.pi
 
 def draw_board(lvl):
     num1 = ((HEIGHT - 50) // 32)
@@ -27,6 +29,11 @@ def draw_board(lvl):
                                 (j * num2 + (0.5 * num2), i * num1 + num1), 3)
             if level[i][j] == 4:
                 pygame.draw.line(screen, color, (j * num2, i * num1 + (0.5 * num1)),
+                                (j * num2 + num2, i * num1 + (0.5*num1)), 3)
+
+            
+            if level[i][j] == 9:
+                pygame.draw.line(screen, 'white', (j * num2, i * num1 + (0.5 * num1)),
                                 (j * num2 + num2, i * num1 + (0.5*num1)), 3)
 run = True
 while run:
