@@ -15,14 +15,14 @@ level = boards
 color = 'orange'
 PI = math.pi
 
+# each design application on the board from 1-9 spaces (below)
 def draw_board(lvl):
     num1 = ((HEIGHT - 50) // 32)
     num2 = (WIDTH // 30)
     for i in range(len(level)):
         for j in range(len(level[i])):
             
-            # each design application on the board from 1-9 spaces (below)
-
+            # each design peice
             if level[i][j] == 1:
                 pygame.draw.circle(screen, 'white', (j * num2 + (0.5*num2), i * num1 + (0.5 * num1)), 4)
             if level[i][j] == 2:
@@ -50,12 +50,17 @@ def draw_board(lvl):
                                 (j * num2 + num2, i * num1 + (0.5*num1)), 3)
             
             # each design application on the board from 1-9 spaces ^(above)
+
+def draw_player():
+    pass
+
+
 run = True
 while run:
     timer.tick(fps)
     screen.fill('black')
     draw_board(level)
-
+    draw_player()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
