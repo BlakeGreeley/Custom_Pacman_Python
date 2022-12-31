@@ -14,6 +14,9 @@ font = pygame.font.Font('freesansbold.ttf', 18)
 level = boards
 color = 'orange'
 PI = math.pi
+player_images = []
+for i in range(1, 5):
+    player_images.append(pygame.transform.scale(pygame.image.load(f'assets/player_images/{i}.png'), (45, 45)))
 
 # each design application on the board from 1-9 spaces (below)
 def draw_board(lvl):
