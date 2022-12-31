@@ -15,8 +15,14 @@ level = boards
 color = 'orange'
 PI = math.pi
 player_images = []
+
 for i in range(1, 5):
     player_images.append(pygame.transform.scale(pygame.image.load(f'assets/player_images/{i}.png'), (45, 45)))
+
+player_x = 450
+player_y = 665
+direction = 0
+counter = 0
 
 # each design application on the board from 1-9 spaces (below)
 def draw_board(lvl):
@@ -54,9 +60,18 @@ def draw_board(lvl):
             
             # each design application on the board from 1-9 spaces ^(above)
 
+# Drawing pacman
 def draw_player():
-    pass
-
+    #0-RIGHT, 1-LEFT, 2-RIGHT, 3-DOWn
+    if direction == 0:
+        screen.blit(player_images[counter // 5], (player_x, player_y))
+    elif direction == 1:
+        screen.blit(pygame.transform.flip(player_images[counter // 5],True, False), (player_x, player_y))
+    elif direction == 0:
+        screen.blit(pygame.transform.rotate(player_images[counter // 5], 90), (player_x, player_y))
+    elif direction == 0:
+        screen.blit(pygame.transform.rotate(player_images[counter // 5], 270), (player_x, player_y))
+# Drawing pacman above ^
 
 run = True
 while run:
