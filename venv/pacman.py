@@ -23,6 +23,7 @@ player_x = 450
 player_y = 665
 direction = 0
 counter = 0
+flicker = False
 
 # each design application on the board from 1-9 spaces (below)
 def draw_board(lvl):
@@ -34,7 +35,7 @@ def draw_board(lvl):
             # each design peice
             if level[i][j] == 1:
                 pygame.draw.circle(screen, 'white', (j * num2 + (0.5*num2), i * num1 + (0.5 * num1)), 4)
-            if level[i][j] == 2:
+            if level[i][j] == 2 and not flicker:
                 pygame.draw.circle(screen, 'white', (j * num2 + (0.5*num2), i * num1 + (0.5 * num1)), 10)
             if level[i][j] == 3:
                 pygame.draw.line(screen, color, (j * num2 + (0.5 * num2), i * num1),
@@ -76,11 +77,14 @@ def draw_player():
 run = True
 while run:
     timer.tick(fps)
-    
     if counter < 19:
         counter += 1
+        # Flicker speed 
+        if counter > 6 :
+            flicker = False
     else:
         counter = 0
+        flicker = True
 
     screen.fill('black')
     draw_board(level)
