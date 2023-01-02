@@ -24,6 +24,8 @@ player_y = 665
 direction = 0
 counter = 0
 flicker = False
+# are turns allowed (R,L,U,D)
+turns_allowed = [False, False, False, False]
 
 # each design application on the board from 1-9 spaces (below)
 def draw_board(lvl):
@@ -74,12 +76,18 @@ def draw_player():
         screen.blit(pygame.transform.rotate(player_images[counter // 5], 270), (player_x, player_y))
 # Drawing pacman above ^
 
+def check_position(center_x, center_y):
+    turns = [False, False, False, False]
+    num1 = (HEIGHT - 50)//32
+    num2 = (WIDTH/30)
+    return turns
+
 run = True
 while run:
     timer.tick(fps)
     if counter < 19:
         counter += 1
-        # Flicker speed 
+        # Flicker speed (higher the number longer tell it will flickers)
         if counter > 6 :
             flicker = False
     else:
@@ -89,6 +97,10 @@ while run:
     screen.fill('black')
     draw_board(level)
     draw_player()
+    center_x = player_x + 23
+    center_y = player_y + 24
+    turns_allowed = check_position(center_x, center_y)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
