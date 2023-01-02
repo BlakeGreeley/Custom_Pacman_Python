@@ -58,7 +58,7 @@ def draw_board(lvl):
                 pygame.draw.line(screen, 'white', (j * num2, i * num1 + (0.5 * num1)),
                                 (j * num2 + num2, i * num1 + (0.5*num1)), 3)
             
-            # each design application on the board from 1-9 spaces ^(above)
+# each design application on the board from 1-9 spaces ^(above)
 
 # Drawing pacman
 def draw_player():
@@ -88,6 +88,7 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        # key click translating to the direction pacman is facing below 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
                 direction = 0
@@ -97,6 +98,7 @@ while run:
                 direction = 2
             if event.key == pygame.K_DOWN:
                 direction = 3
+        # key click translating to the direction pacman is facing Above ^
 
     pygame.display.flip()
 
