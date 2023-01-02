@@ -67,9 +67,9 @@ def draw_player():
         screen.blit(player_images[counter // 5], (player_x, player_y))
     elif direction == 1:
         screen.blit(pygame.transform.flip(player_images[counter // 5],True, False), (player_x, player_y))
-    elif direction == 0:
+    elif direction == 2:
         screen.blit(pygame.transform.rotate(player_images[counter // 5], 90), (player_x, player_y))
-    elif direction == 0:
+    elif direction == 3:
         screen.blit(pygame.transform.rotate(player_images[counter // 5], 270), (player_x, player_y))
 # Drawing pacman above ^
 
@@ -88,6 +88,15 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                direction = 0
+            if event.key == pygame.K_LEFT:
+                direction = 1
+            if event.key == pygame.K_UP:
+                direction = 2
+            if event.key == pygame.K_DOWN:
+                direction = 3
 
     pygame.display.flip()
 
