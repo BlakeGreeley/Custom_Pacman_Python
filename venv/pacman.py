@@ -74,12 +74,31 @@ def draw_player():
         screen.blit(pygame.transform.rotate(player_images[counter // 5], 90), (player_x, player_y))
     elif direction == 3:
         screen.blit(pygame.transform.rotate(player_images[counter // 5], 270), (player_x, player_y))
-# Drawing pacman above ^
+# Drawing pacman above  ^
 
+# This function is for checking collisions and allowed pacman to go forward or stopped
 def check_position(center_x, center_y):
     turns = [False, False, False, False]
     num1 = (HEIGHT - 50)//32
     num2 = (WIDTH/30)
+    num3 = 15
+    if center_x // 30 < 29:
+        if direction == 0:
+            if level[center_y//num1][(center_x - num3) // num2] < 3:
+                turns[1] = True
+        if direction == 1:
+            if level[center_y//num1][(center_x + num3) // num2] < 3:
+                turns[0] = True
+        if direction == 2:
+            if level[(center_y+num3)//num1][center_x // num2] < 3:
+                turns[3] = True
+        if direction == 3:
+            if level[(center_y - num3)//num1][center_x // num2] < 3:
+                turns[2] = True
+    else:
+        turns[0] = True
+        turns[1] = True
+
     return turns
 
 run = True
