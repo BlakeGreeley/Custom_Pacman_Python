@@ -12,7 +12,7 @@ timer = pygame.time.Clock()
 fps = 60
 font = pygame.font.Font('freesansbold.ttf', 18)
 level = boards
-color = 'orange'
+color = 'red'
 PI = math.pi
 player_images = []
 
