@@ -27,6 +27,8 @@ flicker = False
 # are turns allowed (R,L,U,D)
 turns_allowed = [False, False, False, False]
 
+direction_command = 0
+
 # each design application on the board from 1-9 spaces (below)
 def draw_board(lvl):
     num1 = ((HEIGHT - 50) // 32)
@@ -97,15 +99,15 @@ def check_position(centerx, centery):
                 turns[2] = True
         
         if direction == 2 or direction == 3:
-            if 12 <= center_x % num2 <= 18:
+            if 12 <= centerx % num2 <= 18:
                 if level[(centery + num3)//num1][centerx // num2] < 3:
                     turns[3] = True
                 if level[(centery - num3)//num1][centerx // num2] < 3:
                     turns[2] = True
-            if 12 <= center_y % num1 <= 18:
+            if 12 <= centery % num1 <= 18:
                 if level[centery // num1][centerx - num2 // num2] < 3:
                     turns[3] = True
-                if level[center_y // num1][centerx + num2 // num2] < 3:
+                if level[centery // num1][centerx + num2 // num2] < 3:
                     turns[2] = True
         
         if direction == 0 or direction == 1:
@@ -151,14 +153,33 @@ while run:
         # key click translating to the direction pacman is facing below 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
-                direction = 0
+                direction_command = 0
             if event.key == pygame.K_LEFT:
-                direction = 1
+                direction_command = 1
             if event.key == pygame.K_UP:
-                direction = 2
+                direction_command = 2
             if event.key == pygame.K_DOWN:
-                direction = 3
-        # key click translating to the direction pacman is facing Above ^
+                direction_command = 3
+        # key click translating to the direction pacman is facing Above 
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_RIGHT and direction_command == 0:
+                direction_command  = direction
+            if event.key == pygame.K_LEFT and direction_command == 1:
+                direction_command = direction
+            if event.key == pygame.K_UP and direction_command == 2:
+                direction_command = direction
+            if event.key == pygame.K_DOWN and direction_command == 3:
+                direction_command = direction
+            
+        for i in range(4):
+            if direction_command == i and turns_allowed[i]:
+                direction = i
+
+        # player moving from one side to another
+        if player_x > 900:
+            player_x = -47
+        elif player_x < -50:
+            player_x = 895
 
     pygame.display.flip()
 
