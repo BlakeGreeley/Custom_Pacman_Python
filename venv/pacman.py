@@ -30,19 +30,36 @@ turns_allowed = [False, False, False, False]
 direction_command = 0
 player_speed = 2
 score = 0
+powerup = False
+power_counter = 0
+ate_ghosts = [False, False, False, False]
+moving = False
+startup_counter = 0
+lives = 3
 
-def check_collisions(scor):
+def draw_misc():
+    score_text = font.render(f'Score: {score}', True, 'white')
+    screen.blit(score_text, (10, 920))
+    if powerup:
+        pygame.draw.circle(screen, 'blue', (140, 930), 15)
+    for i in range (lives):
+        screen.blit(pygame.transform.scale(player_images[1], (30,30)), (650 + i * 40, 915))
+
+def check_collisions(score, power, power_count, ate_ghosts):
     num1 = (HEIGHT - 50) // 32
     num2 = WIDTH // 30
     if 0 < player_x < 870:
         if level[center_y // num1][center_x // num2] == 1:
             level[center_y // num1][center_x // num2] = 0
-            scor += 10
+            score += 10
         if level[center_y // num1][center_x // num2] == 2:
             level[center_y // num1][center_x // num2] = 0
-            scor += 50
+            score += 50
+            power = True
+            power_count = 0
+            ate_ghosts = [False, False, False, False]
 
-    return scor
+    return score, power, power_count, ate_ghosts
 
 # each design application on the board from 1-9 spaces (below)
 def draw_board(lvl):
@@ -167,15 +184,28 @@ while run:
     else:
         counter = 0
         flicker = True
+    if powerup and power_counter < 600:
+        power_counter += 1
+    elif powerup and power_counter >= 600:
+        power_counter = 0
+        powerup = False
+        ate_ghosts = [False, False, False, False]
+    if startup_counter < 180:
+        moving = False
+        startup_counter += 1
+    else:
+        moving = True
 
     screen.fill('black')
     draw_board(level)
     draw_player()
+    draw_misc()
     center_x = player_x + 23
     center_y = player_y + 24
     turns_allowed = check_position(center_x, center_y)
-    player_x, player_y = move_player(player_x, player_y)
-    score = check_collisions(score)
+    if moving:
+        player_x, player_y = move_player(player_x, player_y)
+    score, powerup, power_counter, ate_ghosts = check_collisions(score, powerup, power_counter, ate_ghosts)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
