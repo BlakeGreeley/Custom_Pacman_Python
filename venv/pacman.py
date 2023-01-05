@@ -82,8 +82,8 @@ def draw_player():
 # This function is for checking collisions and allowed pacman to go forward or stopped
 def check_position(centerx, centery):
     turns = [False, False, False, False]
-    num1 = (HEIGHT - 50)//32
-    num2 = (WIDTH/30)
+    num1 = (HEIGHT - 50) // 32
+    num2 = (WIDTH // 30)
     num3 = 15
     if centerx // 30 < 29:
         if direction == 0:
@@ -106,9 +106,9 @@ def check_position(centerx, centery):
                 if level[(centery - num3)//num1][centerx // num2] < 3:
                     turns[2] = True
             if 12 <= centery % num1 <= 18:
-                if level[centery // num1][centerx - num2 // num2] < 3:
+                if level[centery // num1][(centerx - num2) // num2] < 3:
                     turns[3] = True
-                if level[centery // num1][centerx + num2 // num2] < 3:
+                if level[centery // num1][(centerx + num2) // num2] < 3:
                     turns[2] = True
         
         if direction == 0 or direction == 1:
@@ -118,9 +118,9 @@ def check_position(centerx, centery):
                 if level[(centery - num1) // num1][centerx // num2] < 3:
                     turns[2] = True
             if 12 <= centery % num1 <= 18:
-                if level[centery // num1][centerx - num3 // num2] < 3:
+                if level[centery // num1][(centerx - num3) // num2] < 3:
                     turns[1] = True
-                if level[centery // num1][centerx + num3 // num2] < 3:
+                if level[centery // num1][(centerx + num3) // num2] < 3:
                     turns[0] = True
 
     else:
@@ -138,9 +138,9 @@ def move_player(play_x, play_y):
         play_x -= player_speed
 
     if direction == 2 and turns_allowed[2]:
-        play_y += player_speed
-    elif direction == 3 and turns_allowed[3]:
         play_y -= player_speed
+    elif direction == 3 and turns_allowed[3]:
+        play_y += player_speed
     return play_x, play_y
 
 run = True
@@ -158,8 +158,8 @@ while run:
     screen.fill('black')
     draw_board(level)
     draw_player()
-    centerx = player_x + 23
-    centery = player_y + 24
+    center_x = player_x + 23
+    center_y = player_y + 24
     turns_allowed = check_position(center_x, center_y)
     player_x, player_y = move_player(player_x, player_y)
 
