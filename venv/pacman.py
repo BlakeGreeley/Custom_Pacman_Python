@@ -28,6 +28,7 @@ flicker = False
 turns_allowed = [False, False, False, False]
 
 direction_command = 0
+player_speed = 2
 
 # each design application on the board from 1-9 spaces (below)
 def draw_board(lvl):
@@ -128,6 +129,20 @@ def check_position(centerx, centery):
 
     return turns
 
+
+def move_player(play_x, play_y):
+    # R , L , U , D
+    if direction == 0 and turns_allowed[0]:
+        play_x += player_speed
+    elif direction == 1 and turns_allowed[1]:
+        play_x -= player_speed
+
+    if direction == 2 and turns_allowed[2]:
+        play_y += player_speed
+    elif direction == 3 and turns_allowed[3]:
+        play_y -= player_speed
+    return play_x, play_y
+
 run = True
 while run:
     timer.tick(fps)
@@ -145,7 +160,8 @@ while run:
     draw_player()
     centerx = player_x + 23
     centery = player_y + 24
-    turns_allowed = check_position(centerx, centery)
+    turns_allowed = check_position(center_x, center_y)
+    player_x, player_y = move_player(player_x, player_y)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
