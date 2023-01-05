@@ -95,6 +95,11 @@ def check_position(center_x, center_y):
         if direction == 3:
             if level[(center_y - num3)//num1][center_x // num2] < 3:
                 turns[2] = True
+        if direction == 2 or direction == 3:
+            if 12 <= center_x % num2 <= 18:
+                if level[(center_y+num3)//num1][center_x // num2] < 3:
+                    turns[3] = True
+
     else:
         turns[0] = True
         turns[1] = True
