@@ -93,23 +93,23 @@ def check_position(centerx, centery):
             if level[centery // num1][(centerx + num3) // num2] < 3:
                 turns[0] = True
         if direction == 2:
-            if level[(centery + num3)//num1][centerx // num2] < 3:
+            if level[(centery + num3) // num1][centerx // num2] < 3:
                 turns[3] = True
         if direction == 3:
-            if level[(centery - num3)//num1][centerx // num2] < 3:
+            if level[(centery - num3) // num1][centerx // num2] < 3:
                 turns[2] = True
         
         if direction == 2 or direction == 3:
             if 12 <= centerx % num2 <= 18:
-                if level[(centery + num3)//num1][centerx // num2] < 3:
+                if level[(centery + num3) // num1][centerx // num2] < 3:
                     turns[3] = True
-                if level[(centery - num3)//num1][centerx // num2] < 3:
+                if level[(centery - num3) // num1][centerx // num2] < 3:
                     turns[2] = True
             if 12 <= centery % num1 <= 18:
                 if level[centery // num1][(centerx - num2) // num2] < 3:
-                    turns[3] = True
+                    turns[1] = True
                 if level[centery // num1][(centerx + num2) // num2] < 3:
-                    turns[2] = True
+                    turns[0] = True
         
         if direction == 0 or direction == 1:
             if 12 <= centerx % num2 <= 18:
@@ -136,7 +136,6 @@ def move_player(play_x, play_y):
         play_x += player_speed
     elif direction == 1 and turns_allowed[1]:
         play_x -= player_speed
-
     if direction == 2 and turns_allowed[2]:
         play_y -= player_speed
     elif direction == 3 and turns_allowed[3]:
@@ -187,15 +186,20 @@ while run:
             if event.key == pygame.K_DOWN and direction_command == 3:
                 direction_command = direction
             
-        for i in range(4):
-            if direction_command == i and turns_allowed[i]:
-                direction = i
+    if direction_command == 0 and turns_allowed[0]:
+        direction = 0
+    if direction_command == 1 and turns_allowed[1]:
+        direction = 1
+    if direction_command == 2 and turns_allowed[2]:
+        direction = 2
+    if direction_command == 3 and turns_allowed[3]:
+        direction = 3
 
         # player moving from one side to another
-        if player_x > 900:
-            player_x = -47
-        elif player_x < -50:
-            player_x = 895
+    if player_x > 900:
+        player_x = -47
+    elif player_x < -50:
+        player_x = 895
 
     pygame.display.flip()
 
