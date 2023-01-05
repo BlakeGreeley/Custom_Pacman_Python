@@ -31,17 +31,18 @@ direction_command = 0
 player_speed = 2
 score = 0
 
-def check_collisions(score):
+def check_collisions(scor):
     num1 = (HEIGHT - 50) // 32
-    num2 = width // 30
+    num2 = WIDTH // 30
     if 0 < player_x < 870:
         if level[center_y // num1][center_x // num2] == 1:
-            level[center_y // num1][center_x // num2] == 0
-            score += 10
+            level[center_y // num1][center_x // num2] = 0
+            scor += 10
         if level[center_y // num1][center_x // num2] == 2:
-            level[center_y // num1][center_x // num2] == 0
-            score += 50
-        return score
+            level[center_y // num1][center_x // num2] = 0
+            scor += 50
+
+    return scor
 
 # each design application on the board from 1-9 spaces (below)
 def draw_board(lvl):
@@ -174,7 +175,7 @@ while run:
     center_y = player_y + 24
     turns_allowed = check_position(center_x, center_y)
     player_x, player_y = move_player(player_x, player_y)
-    check_collisions()
+    score = check_collisions(score)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
